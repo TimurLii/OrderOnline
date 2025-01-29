@@ -1,0 +1,91 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2
+      author: Timur
+      changes:
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: product_id
+                  valueNumeric: 1
+              - column:
+                  name: quantity
+                  valueNumeric: 10
+              - column:
+                  name: price
+                  valueNumeric: 100
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: product_id
+                  valueNumeric: 2
+              - column:
+                  name: quantity
+                  valueNumeric: 20
+              - column:
+                  name: price
+                  valueNumeric: 200
+        - insert:
+            tableName: product
+            columns:
+              - column:
+                  name: product_id
+                  valueNumeric: 3
+              - column:
+                  name: quantity
+                  valueNumeric: 30
+              - column:
+                  name: price
+                  valueNumeric: 300
+
+  - changeSet:
+      id: 3
+      author: Timur
+      changes:
+        - insert:
+            tableName: order_table
+            columns:
+              - column:
+                  name: order_id
+                  valueNumeric: 1
+              - column:
+                  name: customer_id
+                  valueNumeric: 1
+              - column:
+                  name: product_id
+                  valueNumeric: 1
+              - column:
+                  name: status
+                  value: PENDING
+        - insert:
+            tableName: order_table
+            columns:
+              - column:
+                  name: order_id
+                  valueNumeric: 2
+              - column:
+                  name: customer_id
+                  valueNumeric: 2
+              - column:
+                  name: product_id
+                  valueNumeric: 2
+              - column:
+                  name: status
+                  value: COMPLETED
+        - insert:
+            tableName: order_table
+            columns:
+              - column:
+                  name: order_id
+                  valueNumeric: 3
+              - column:
+                  name: customer_id
+                  valueNumeric: 3
+              - column:
+                  name: product_id
+                  valueNumeric: 3
+              - column:
+                  name: status
+                  value: CANCELLED

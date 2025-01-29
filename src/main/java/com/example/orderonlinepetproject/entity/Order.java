@@ -1,5 +1,6 @@
 package com.example.orderonlinepetproject.entity;
 
+import com.example.orderonlinepetproject.dto.ProductDto;
 import com.example.orderonlinepetproject.enums.Status;
 import jakarta.persistence.*;
 
@@ -25,6 +26,7 @@ public class Order {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private Status status;
+
 
 
 }
