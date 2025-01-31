@@ -4,10 +4,11 @@ import com.example.orderonlinepetproject.aspect.LogHibernateOperation;
 import com.example.orderonlinepetproject.dto.OrderDto;
 import com.example.orderonlinepetproject.entity.Order;
 import com.example.orderonlinepetproject.entity.Product;
+import com.example.orderonlinepetproject.exeption.InsufficienciesException;
+import com.example.orderonlinepetproject.mapper.OrderMapper;
 import com.example.orderonlinepetproject.repository.OrderRepository;
 import com.example.orderonlinepetproject.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +24,15 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Order createOrder(Order order) {
-        Product product = productRepository.findById(order.getProduct().getProductId())
+    public Order createOrder(Order order, Long transferQuantity) {
+        Product productInDb = productRepository.findById(order.getProduct().getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+        if(!checkQuantity(order, transferQuantity)){
+            throw new InsufficienciesException("Excessive amount ");
+        }
 
-        order.setProduct(product); // Привязываем управляемый объект
+        productRepository.decreaseQuantityByProductId(productInDb.getProductId(),transferQuantity);
+        order.setProduct(productInDb);
         return orderRepository.save(order);
     }
 
@@ -43,7 +48,13 @@ public class OrderService {
         return orderRepository.save(existingOrder);
     }
 
-    public void deleteOrder(Long id) {
+
+    public void deleteOrderById(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    private boolean checkQuantity(Order order, Long transferQuantity) {
+        Long quantityByProductId = productRepository.findQuantityByProductId(order.getProduct().getProductId());
+        return quantityByProductId >= transferQuantity;
     }
 }

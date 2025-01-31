@@ -33,11 +33,9 @@ public class LoggingAspect {
             return result;
 
         }catch (Exception e){
-            logger.error("Ошибка при выполнении метода: {}.{}() - {}", className, methodName, e.getMessage());
+            logger.info("Ошибка при выполнении метода: {}.{}() - {}", className, methodName, e.getMessage());
             throw e;
         }
-
-
 
     }
 }

@@ -33,7 +33,7 @@ public class OrderController {
 
       Order order = OrderMapper.convertOrderDtoToOrder(orderDto);// преобразуем dto в сущность
 
-      Order createOrder = orderService.createOrder(order);// сохранение order
+      Order createOrder = orderService.createOrder(order , orderDto.getProduct().getQuantity());// сохранение order
 
       OrderDto createOrderDto = OrderMapper.convertOrderToOrderDto(createOrder); // преобразуем обратно в dto
 
@@ -80,9 +80,15 @@ public class OrderController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-        orderService.deleteOrder(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<OrderDto> deleteOrder(@PathVariable Long id) {
+        Order order = orderService.getOrderById(id);
+        if(order == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else{
+            orderService.deleteOrderById(id);
+            return ResponseEntity.status(HttpStatus.OK).body(OrderMapper.convertOrderToOrderDto(order));
+        }
     }
 
 }

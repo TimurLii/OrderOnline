@@ -32,6 +32,7 @@ public class HibernateLoggingAspect {
             return result;
 
         } catch (Exception e) {
+
             resString = String.format("Ошибка при выполнении метода: %s.%s() - {}", className, methodName, e.getMessage());
 
             logger.info(String.valueOf(Ansi.ansi().fgGreen().a(resString)));
