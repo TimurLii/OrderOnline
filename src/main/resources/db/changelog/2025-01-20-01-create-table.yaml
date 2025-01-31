@@ -8,18 +8,18 @@ databaseChangeLog:
             columns:
               - column:
                   name: order_id
-                  type: BIGINT
+                  type: bigserial
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
                   name: customer_id
-                  type: BIGINT
+                  type: bigserial
                   constraints:
                     nullable: false
               - column:
                   name: product_id
-                  type: BIGINT
+                  type: bigserial
                   constraints:
                     nullable: false
               - column:
@@ -32,7 +32,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: product_id
-                  type: BIGINT
+                  type: bigserial
                   constraints:
                     primaryKey: true
                     nullable: false
