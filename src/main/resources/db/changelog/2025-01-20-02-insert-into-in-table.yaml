@@ -58,7 +58,7 @@ databaseChangeLog:
                   valueNumeric: 1
               - column:
                   name: status
-                  value: PENDING
+                  value: PROCESSING
         - insert:
             tableName: order_table
             columns:
@@ -73,7 +73,7 @@ databaseChangeLog:
                   valueNumeric: 2
               - column:
                   name: status
-                  value: COMPLETED
+                  value: CANCELLED
         - insert:
             tableName: order_table
             columns:

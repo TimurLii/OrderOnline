@@ -1,5 +1,6 @@
 package com.example.orderonlinepetproject.service;
 
+import com.example.orderonlinepetproject.aspect.LogHibernateOperation;
 import com.example.orderonlinepetproject.dto.OrderDto;
 import com.example.orderonlinepetproject.entity.Order;
 import com.example.orderonlinepetproject.repository.OrderRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@LogHibernateOperation
 public class OrderService {
     private final OrderRepository orderRepository;
 

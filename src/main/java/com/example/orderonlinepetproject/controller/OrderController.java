@@ -1,5 +1,6 @@
 package com.example.orderonlinepetproject.controller;
 
+import com.example.orderonlinepetproject.aspect.MyLogFromMethod;
 import com.example.orderonlinepetproject.dto.OrderDto;
 import com.example.orderonlinepetproject.entity.Order;
 import com.example.orderonlinepetproject.mapper.OrderMapper;
@@ -15,7 +16,8 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/orders")
+@MyLogFromMethod
 public class OrderController {
 
     private final OrderService orderService;
