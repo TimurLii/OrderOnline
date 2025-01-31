@@ -28,10 +28,10 @@ public class OrderService {
         Product productInDb = productRepository.findById(order.getProduct().getProductId())
                 .orElseThrow(() -> new EntityNotFoundException("Product not found"));
         if(!checkQuantity(order, transferQuantity)){
-            throw new InsufficienciesException("Excessive amount ");
+            throw new InsufficienciesException("Excessive amount");
         }
 
-        productRepository.decreaseQuantityByProductId(productInDb.getProductId(),transferQuantity);
+        productRepository.decreaseQuantityByProductId(productInDb.getProductId(), transferQuantity);
         order.setProduct(productInDb);
         return orderRepository.save(order);
     }
@@ -43,6 +43,7 @@ public class OrderService {
     public Order getOrderById(Long id) {
         return orderRepository.findById(id).orElseThrow();
     }
+    //TODO Сделать 400 ошибку за место 500
 
     public Order updateOrder(Order existingOrder) {
         return orderRepository.save(existingOrder);

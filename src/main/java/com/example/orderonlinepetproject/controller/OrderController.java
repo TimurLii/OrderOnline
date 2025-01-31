@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -55,7 +56,7 @@ public class OrderController {
         Order order = orderService.getOrderById(id);
 
         if(order == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            throw new NoSuchElementException();
         }
 
         OrderDto orderDto = OrderMapper.convertOrderToOrderDto(order);
