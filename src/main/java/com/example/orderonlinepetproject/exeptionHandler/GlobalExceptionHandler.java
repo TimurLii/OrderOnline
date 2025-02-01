@@ -1,5 +1,6 @@
 package com.example.orderonlinepetproject.exeptionHandler;
 
+import com.example.orderonlinepetproject.exeption.InvalidStatusForOrder;
 import com.example.orderonlinepetproject.exeption.OrderNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -35,5 +36,10 @@ public class GlobalExceptionHandler {
         System.err.println("Unexpected error: " + ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("An unexpected error occurred: " + ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidStatusForOrder.class)
+    public ResponseEntity<String> handleInvalidStatusForOrder(InvalidStatusForOrder ex ) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }

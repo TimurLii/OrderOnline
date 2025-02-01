@@ -4,11 +4,13 @@ import com.example.orderonlinepetproject.aspect.LogHibernateOperation;
 import com.example.orderonlinepetproject.dto.OrderDto;
 import com.example.orderonlinepetproject.entity.Order;
 import com.example.orderonlinepetproject.entity.Product;
+import com.example.orderonlinepetproject.enums.Status;
 import com.example.orderonlinepetproject.exeption.InsufficienciesException;
 import com.example.orderonlinepetproject.mapper.OrderMapper;
 import com.example.orderonlinepetproject.repository.OrderRepository;
 import com.example.orderonlinepetproject.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,5 +59,9 @@ public class OrderService {
     private boolean checkQuantity(Order order, Long transferQuantity) {
         Long quantityByProductId = productRepository.findQuantityByProductId(order.getProduct().getProductId());
         return quantityByProductId >= transferQuantity;
+    }
+
+    public ResponseEntity<List<OrderDto>> findAllOrdersByStatus(Status status) {
+        return orderRepository.findAllByStatus(status);
     }
 }

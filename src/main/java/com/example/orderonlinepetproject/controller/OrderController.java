@@ -3,6 +3,7 @@ package com.example.orderonlinepetproject.controller;
 import com.example.orderonlinepetproject.aspect.MyLogFromMethod;
 import com.example.orderonlinepetproject.dto.OrderDto;
 import com.example.orderonlinepetproject.entity.Order;
+import com.example.orderonlinepetproject.enums.Status;
 import com.example.orderonlinepetproject.exeption.OrderNotFoundException;
 import com.example.orderonlinepetproject.mapper.OrderMapper;
 import com.example.orderonlinepetproject.mapper.ProductMapper;
@@ -15,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 @Slf4j
 @RestController
@@ -51,6 +52,17 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(orderDtos);
     }
 
+    @GetMapping("/status/{status}")
+    public ResponseEntity<List<OrderDto>> getOrderByStatus(@PathVariable Status status) {
+        List <Order> orders = orderService.getAllOrders();
+        List<OrderDto> orderDtos = orders.stream()
+                .map(OrderMapper :: convertOrderToOrderDto)
+                .filter(order -> order.getStatus().equals(status))
+                .toList();
+        return ResponseEntity.status(HttpStatus.OK).body(orderDtos);
+
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<OrderDto> getOrderById(@PathVariable Long id) {
 
@@ -77,7 +89,8 @@ public class OrderController {
 
         existingOrder.setCustomerId(orderDto.getCustomerId());
         existingOrder.setProduct(ProductMapper.convertProductDtoToProduct(orderDto.getProduct()));
-        existingOrder.setStatus(orderDto.getStatus());
+        existingOrder.updateStatus(orderDto.getStatus());
+//        existingOrder.setStatus(orderDto.getStatus());
 
         Order updatedOrder = orderService.updateOrder(existingOrder);
         OrderDto updatedOrderDto = OrderMapper.convertOrderToOrderDto(updatedOrder);
