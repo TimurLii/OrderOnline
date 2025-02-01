@@ -41,9 +41,9 @@ public class OrderService {
     }
 
     public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElseThrow();
+        return orderRepository.findById(id).isPresent() ? orderRepository.findById(id).get() : null;
     }
-    //TODO Сделать 400 ошибку за место 500
+
 
     public Order updateOrder(Order existingOrder) {
         return orderRepository.save(existingOrder);

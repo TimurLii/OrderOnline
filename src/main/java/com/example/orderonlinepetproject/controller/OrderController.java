@@ -3,6 +3,7 @@ package com.example.orderonlinepetproject.controller;
 import com.example.orderonlinepetproject.aspect.MyLogFromMethod;
 import com.example.orderonlinepetproject.dto.OrderDto;
 import com.example.orderonlinepetproject.entity.Order;
+import com.example.orderonlinepetproject.exeption.OrderNotFoundException;
 import com.example.orderonlinepetproject.mapper.OrderMapper;
 import com.example.orderonlinepetproject.mapper.ProductMapper;
 import com.example.orderonlinepetproject.service.OrderService;
@@ -55,14 +56,17 @@ public class OrderController {
 
         Order order = orderService.getOrderById(id);
 
+
         if(order == null) {
-            throw new NoSuchElementException();
+            throw new OrderNotFoundException("Order with ID " + id + " not found.");
         }
 
         OrderDto orderDto = OrderMapper.convertOrderToOrderDto(order);
 
         return ResponseEntity.status(HttpStatus.OK).body(orderDto);
     }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderDto> updateOrderById(@PathVariable Long id, @RequestBody OrderDto orderDto) {
